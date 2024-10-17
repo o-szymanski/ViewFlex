@@ -8,7 +8,7 @@ public class TodoListViewModel : BindableBase
 {
     public DelegateCommand AddTodoCommand { get; private set; }
     public DelegateCommand<Todo> DeleteTodoCommand { get; private set; }
-    public ObservableCollection<Todo> TodoList { get; set; }
+    public ObservableCollection<Todo> TodoList { get; set; } = [];
 
     private readonly ITodoService _todoService;
     private string _newTodoTitle = string.Empty;
@@ -20,29 +20,35 @@ public class TodoListViewModel : BindableBase
     }
 
     public TodoListViewModel(ITodoService todoService)
-    {
+    {      
         _todoService = todoService;
-        TodoList = new ObservableCollection<Todo>(_todoService.GetTodoList());
-        AddTodoCommand = new DelegateCommand(AddTodo);
-        DeleteTodoCommand = new DelegateCommand<Todo>(DeleteTodo);
+        _ = InitializeTodoListAsync();
+        AddTodoCommand = new DelegateCommand(async () => await AddTodoAsync());
+        DeleteTodoCommand = new DelegateCommand<Todo>(async (todo) => await DeleteTodoAsync(todo));
     }
 
-    private void AddTodo()
+    public async Task InitializeTodoListAsync()
+    {
+        var todos = await _todoService.GetTodoListAsync();
+        TodoList = new ObservableCollection<Todo>(todos);
+    }
+
+    private async Task AddTodoAsync()
     {
         if (!string.IsNullOrEmpty(NewTodoTitle))
         {
             var todo = new Todo { Title = NewTodoTitle };
-            _todoService.AddTodo(todo);
+            await _todoService.AddTodoAsync(todo);
             TodoList.Add(todo);
             NewTodoTitle = string.Empty;
         }
     }
 
-    private void DeleteTodo(Todo todo)
+    private async Task DeleteTodoAsync(Todo todo)
     {
         if (todo is not null)
         {
-            _todoService.RemoveTodo(todo.Id);
+            await _todoService.RemoveTodoAsync(todo.Id);
             TodoList.Remove(todo);
         }
     }

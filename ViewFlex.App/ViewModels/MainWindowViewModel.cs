@@ -6,11 +6,13 @@ public class MainWindowViewModel : BindableBase
 
     public DelegateCommand<string> NavigateCommand { get; private set; }
 
+    private const string RegionName = "Region";
+
     public MainWindowViewModel(IRegionManager regionManager)
     {
         _regionManager = regionManager;
         NavigateCommand = new DelegateCommand<string>(Navigate);
     }
 
-    private void Navigate(string viewName) => _regionManager.RequestNavigate("Region", viewName);
+    private void Navigate(string viewName) => _regionManager.RequestNavigate(RegionName, viewName);
 }

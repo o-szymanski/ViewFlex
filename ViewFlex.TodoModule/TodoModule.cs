@@ -8,6 +8,8 @@ public class TodoModule(IRegionManager regionManager) : IModule
 {
     private readonly IRegionManager _regionManager = regionManager;
 
-    public void OnInitialized(IContainerProvider containerProvider) => _regionManager.RegisterViewWithRegion("Region", typeof(TodoListView));
+    private const string RegionName = "Region";
+
+    public void OnInitialized(IContainerProvider containerProvider) => _regionManager.RegisterViewWithRegion(RegionName, typeof(TodoListView));
     public void RegisterTypes(IContainerRegistry containerRegistry) => containerRegistry.RegisterSingleton<ITodoService, TodoService>();
 }

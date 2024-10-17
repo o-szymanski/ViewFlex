@@ -4,7 +4,7 @@ namespace ViewFlex.Core.Interfaces;
 
 public interface ITodoService
 {
-    List<Todo> GetTodoList();
-    void AddTodo(Todo todo);
-    void RemoveTodo(int id);
+    Task<List<Todo>> GetTodoListAsync();
+    Task AddTodoAsync(Todo todo);
+    Task RemoveTodoAsync(int id);
 }

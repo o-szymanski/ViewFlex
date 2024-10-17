@@ -8,6 +8,8 @@ public class ExpensesModule(IRegionManager regionManager) : IModule
 {
     private readonly IRegionManager _regionManager = regionManager;
 
-    public void OnInitialized(IContainerProvider containerProvider) => _regionManager.RegisterViewWithRegion("Region", typeof(ExpenseListView));
+    private const string RegionName = "Region";
+
+    public void OnInitialized(IContainerProvider containerProvider) => _regionManager.RegisterViewWithRegion(RegionName, typeof(ExpenseListView));
     public void RegisterTypes(IContainerRegistry containerRegistry) => containerRegistry.RegisterSingleton<IExpenseService, ExpenseService>();
 }

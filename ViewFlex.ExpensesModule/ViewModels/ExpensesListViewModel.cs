@@ -1,12 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using ViewFlex.Core.Interfaces;
 using ViewFlex.Core.Models;
+using ViewFlex.Infrastructure.Services;
 
 namespace ViewFlex.ExpensesModule.ViewModels;
 
 public class ExpenseListViewModel : BindableBase
 { 
-    public ObservableCollection<Expense> Expenses { get; set; }
+    public ObservableCollection<Expense> Expenses { get; set; } = [];
     public DelegateCommand<Expense> DeleteExpenseCommand { get; private set; }
     public DelegateCommand AddExpenseCommand { get; private set; }
 
@@ -29,19 +30,25 @@ public class ExpenseListViewModel : BindableBase
     }
 
     public ExpenseListViewModel(IExpenseService expenseService)
-    {
+    {    
         _expenseService = expenseService;
-        Expenses = new ObservableCollection<Expense>(_expenseService.GetExpenses());
-        AddExpenseCommand = new DelegateCommand(AddExpense);
-        DeleteExpenseCommand = new DelegateCommand<Expense>(DeleteExpense);
+        _ = InitializeExpensesAsync();
+        AddExpenseCommand = new DelegateCommand(async () => await AddExpenseAsync());
+        DeleteExpenseCommand = new DelegateCommand<Expense>(async (expense) => await DeleteExpenseAsync(expense));
     }
 
-    private void AddExpense()
+    public async Task InitializeExpensesAsync()
+    {
+        var expenses = await _expenseService.GetExpensesAsync();
+        Expenses = new ObservableCollection<Expense>(expenses);
+    }
+
+    private async Task AddExpenseAsync()
     {
         if (!string.IsNullOrEmpty(NewExpenseDescription) && NewExpenseAmount > MinimumExpenseAmount)
         {
             var expense = new Expense { Description = NewExpenseDescription, Amount = NewExpenseAmount };
-            _expenseService.AddExpense(expense);
+            await _expenseService.AddExpenseAsync(expense);
             Expenses.Add(expense);
 
             NewExpenseDescription = string.Empty;
@@ -49,11 +56,11 @@ public class ExpenseListViewModel : BindableBase
         }
     }
 
-    private void DeleteExpense(Expense expense)
+    private async Task DeleteExpenseAsync(Expense expense)
     {
         if (expense is not null)
         {
-            _expenseService.RemoveExpense(expense.Id);
+            await _expenseService.RemoveExpenseAsync(expense.Id);
             Expenses.Remove(expense);
         }
     }

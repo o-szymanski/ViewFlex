@@ -4,7 +4,7 @@ namespace ViewFlex.Core.Interfaces;
 
 public interface IExpenseService
 {
-    List<Expense> GetExpenses();
-    void AddExpense(Expense expense);
-    void RemoveExpense(int id);
+    Task<List<Expense>> GetExpensesAsync();
+    Task AddExpenseAsync(Expense expense);
+    Task RemoveExpenseAsync(int id);
 }
