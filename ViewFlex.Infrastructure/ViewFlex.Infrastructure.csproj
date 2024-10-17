@@ -7,4 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ViewFlex.Core\ViewFlex.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,8 @@
+﻿<UserControl x:Class="ViewFlex.ExpensesModule.Views.ExpenseListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListBox ItemsSource="{Binding ExpenseItems}" DisplayMemberPath="Description"/>
+        <Button Command="{Binding AddExpenseCommand}" Content="Add Expense"/>
+    </Grid>
+</UserControl>

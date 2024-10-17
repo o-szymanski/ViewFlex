@@ -1,0 +1,8 @@
+﻿<UserControl x:Class="ViewFlex.TodoModule.Views.TodoListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ListBox ItemsSource="{Binding TodoItems}" DisplayMemberPath="Title"/>
+        <Button Command="{Binding AddTodoCommand}" Content="Add Task"/>
+    </Grid>
+</UserControl>
