@@ -31,28 +31,20 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-
     <Grid Margin="10,10,0,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
         <StackPanel Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Center">
             <TextBlock Text="Add New Expense" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" TextAlignment="Center"/>
             <TextBlock Text="Expense Title" FontSize="12" Foreground="Gray" Margin="0,0,0,5" TextAlignment="Center"/>
             <TextBox Width="200" Margin="0,0,0,5" Text="{Binding NewExpenseDescription, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="Expense Amount" FontSize="12" Foreground="Gray" Margin="0,0,0,5" TextAlignment="Center"/>
-            <TextBox Width="200" Margin="0,0,0,10"
-         Text="{Binding NewExpenseAmount, 
-                StringFormat=N2,
-                UpdateSourceTrigger=PropertyChanged, 
-                ValidatesOnDataErrors=True,
-                ConverterCulture='pl-PL'}" />
+            <TextBox Width="200" Margin="0,0,0,10" Text="{Binding NewExpenseAmount, StringFormat=N2, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ConverterCulture='pl-PL'}" />
             <Button Style="{StaticResource AddExpenseButtonStyle}" Content="Add Expense" Command="{Binding AddExpenseCommand}" Width="100"/>
         </StackPanel>
-
-        <ListBox ItemsSource="{Binding ExpenseItems}" Grid.Row="1" Margin="0,0,10,0">
+        <ListBox ItemsSource="{Binding Expenses}" Grid.Row="1" Margin="0,0,10,0">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="AllowDrop" Value="False"/>
@@ -62,7 +54,6 @@
                     <Setter Property="Focusable" Value="False"/>
                 </Style>
             </ListBox.ItemContainerStyle>
-
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Background="Transparent" Margin="0,0,0,5">
@@ -73,10 +64,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding Description}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Margin="5,0" IsHitTestVisible="False"/>
                         <TextBlock Text="{Binding Amount, StringFormat=C}" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1" Margin="5,0" IsHitTestVisible="False"/>
-                        <Button Content="🗑️" Command="{Binding DataContext.DeleteExpenseCommand, ElementName=Root}" 
-                                CommandParameter="{Binding}" Width="30" Height="30" Margin="10,0,0,0"
-                                Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" 
-                                VerticalAlignment="Center" ToolTip="Delete Expense" Grid.Column="2">
+                        <Button Content="🗑️" Command="{Binding DataContext.DeleteExpenseCommand, ElementName=Root}" CommandParameter="{Binding}" Width="30" Height="30" Margin="10,0,0,0" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Delete Expense" Grid.Column="2">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Setter Property="Template">

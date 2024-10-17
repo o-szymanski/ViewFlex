@@ -7,43 +7,43 @@ namespace ViewFlex.TodoModule.ViewModels;
 public class TodoListViewModel : BindableBase
 {
     public DelegateCommand AddTodoCommand { get; private set; }
-    public DelegateCommand<TodoItem> DeleteTodoCommand { get; private set; }
-    public ObservableCollection<TodoItem> TodoItems { get; set; }
+    public DelegateCommand<Todo> DeleteTodoCommand { get; private set; }
+    public ObservableCollection<Todo> TodoList { get; set; }
 
     private readonly ITodoService _todoService;
-    private string _newTaskTitle = string.Empty;
+    private string _newTodoTitle = string.Empty;
 
-    public string NewTaskTitle
+    public string NewTodoTitle
     {
-        get => _newTaskTitle;
-        set => SetProperty(ref _newTaskTitle, value);
+        get => _newTodoTitle;
+        set => SetProperty(ref _newTodoTitle, value);
     }
 
     public TodoListViewModel(ITodoService todoService)
     {
         _todoService = todoService;
-        TodoItems = new ObservableCollection<TodoItem>(_todoService.GetAllTodos());
+        TodoList = new ObservableCollection<Todo>(_todoService.GetTodoList());
         AddTodoCommand = new DelegateCommand(AddTodo);
-        DeleteTodoCommand = new DelegateCommand<TodoItem>(DeleteTodo);
+        DeleteTodoCommand = new DelegateCommand<Todo>(DeleteTodo);
     }
 
     private void AddTodo()
     {
-        if (!string.IsNullOrEmpty(NewTaskTitle))
+        if (!string.IsNullOrEmpty(NewTodoTitle))
         {
-            var newItem = new TodoItem { Title = NewTaskTitle };
-            _todoService.AddTodoItem(newItem);
-            TodoItems.Add(newItem);
-            NewTaskTitle = string.Empty;
+            var todo = new Todo { Title = NewTodoTitle };
+            _todoService.AddTodo(todo);
+            TodoList.Add(todo);
+            NewTodoTitle = string.Empty;
         }
     }
 
-    private void DeleteTodo(TodoItem item)
+    private void DeleteTodo(Todo todo)
     {
-        if (item is not null)
+        if (todo is not null)
         {
-            _todoService.RemoveTodoItem(item.Id);
-            TodoItems.Remove(item);
+            _todoService.RemoveTodo(todo.Id);
+            TodoList.Remove(todo);
         }
     }
 }

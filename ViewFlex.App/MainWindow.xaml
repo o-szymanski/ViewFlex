@@ -111,7 +111,7 @@
                     <GradientStop Color="#3A0647" Offset="1.0"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <Button Content="Task List" Command="{Binding NavigateCommand}" CommandParameter="TodoListView" Margin="10, 20, 10, 10" Style="{StaticResource SidebarButtonStyle}"/>
+            <Button Content="Todo List" Command="{Binding NavigateCommand}" CommandParameter="TodoListView" Margin="10, 20, 10, 10" Style="{StaticResource SidebarButtonStyle}"/>
             <Button Content="Expense List" Command="{Binding NavigateCommand}" CommandParameter="ExpenseListView" Margin="10, 10, 10, 10" Style="{StaticResource SidebarButtonStyle}"/>
         </StackPanel>
 

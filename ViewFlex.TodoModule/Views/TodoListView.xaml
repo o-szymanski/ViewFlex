@@ -3,7 +3,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <UserControl.Resources>
-        <Style x:Key="AddTaskButtonStyle" TargetType="Button">
+        <Style x:Key="AddTodoButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#4A90E2"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
@@ -30,21 +30,18 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-
     <Grid Margin="10,10,0,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <StackPanel Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Center">
-            <TextBlock Text="Add New Task" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" TextAlignment="Center"/>
-            <TextBlock Text="Task Title" FontSize="12" Foreground="Gray" Margin="0,0,0,5" TextAlignment="Center"/>
-            <TextBox Width="200" Margin="0,0,0,10" Text="{Binding NewTaskTitle, UpdateSourceTrigger=PropertyChanged}" />
-            <Button Content="Add Task" Command="{Binding AddTodoCommand}" Width="100" Style="{StaticResource AddTaskButtonStyle}"/>
+            <TextBlock Text="Add New Todo" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" TextAlignment="Center"/>
+            <TextBlock Text="Todo Title" FontSize="12" Foreground="Gray" Margin="0,0,0,5" TextAlignment="Center"/>
+            <TextBox Width="200" Margin="0,0,0,10" Text="{Binding NewTodoTitle, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Add Todo" Command="{Binding AddTodoCommand}" Width="100" Style="{StaticResource AddTodoButtonStyle}"/>
         </StackPanel>
-
-        <ListBox ItemsSource="{Binding TodoItems}" Grid.Row="1" Margin="0,0,10,0">
+        <ListBox ItemsSource="{Binding TodoList}" Grid.Row="1" Margin="0,0,10,0">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="AllowDrop" Value="False"/>
@@ -54,7 +51,6 @@
                     <Setter Property="Focusable" Value="False"/>
                 </Style>
             </ListBox.ItemContainerStyle>
-
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Background="Transparent" Margin="0,0,0,5">
@@ -63,10 +59,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding Title}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Margin="5,0" IsHitTestVisible="False"/>
-                        <Button Content="🗑️" Command="{Binding DataContext.DeleteTodoCommand, ElementName=Root}" 
-                                CommandParameter="{Binding}" Width="30" Height="30" Margin="10,0,0,0"
-                                Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" 
-                                VerticalAlignment="Center" ToolTip="Delete Task" Grid.Column="1">
+                        <Button Content="🗑️" Command="{Binding DataContext.DeleteTodoCommand, ElementName=Root}" CommandParameter="{Binding}" Width="30" Height="30" Margin="10,0,0,0" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Delete Todo" Grid.Column="1">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Setter Property="Template">

@@ -1,6 +1,6 @@
 ﻿namespace ViewFlex.Core.Models;
 
-public class ExpenseItem
+public class Expense
 {
     public int Id { get; set; }
     public required string Description { get; set; } = string.Empty;

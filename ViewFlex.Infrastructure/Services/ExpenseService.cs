@@ -6,7 +6,8 @@ namespace ViewFlex.Infrastructure.Services;
 public class ExpenseService : IExpenseService
 {
     private int _nextId = 6;
-    private readonly List<ExpenseItem> _expenseItems =
+
+    private readonly List<Expense> Expenses =
     [
         new() { Id = 1, Amount = 100, Description = "Test Expense" },
         new() { Id = 2, Amount = 100, Description = "Test Expense" },
@@ -15,20 +16,20 @@ public class ExpenseService : IExpenseService
         new() { Id = 5, Amount = 100, Description = "Test Expense" }
     ];
 
-    public List<ExpenseItem> GetAllExpenses() => _expenseItems;
+    public List<Expense> GetExpenses() => Expenses;
 
-    public void AddExpenseItem(ExpenseItem item)
+    public void AddExpense(Expense expense)
     {
-    if (item is not null)
+    if (expense is not null)
         {
-            item.Id = _nextId++;
-            _expenseItems.Add(item);
+            expense.Id = _nextId++;
+            Expenses.Add(expense);
         }
     }
 
-    public void RemoveExpenseItem(int id)
+    public void RemoveExpense(int id)
     {
-        var item = _expenseItems.FirstOrDefault(x => x.Id == id);
-        if (item is not null) _expenseItems.Remove(item);
+        var expense = Expenses.FirstOrDefault(x => x.Id == id);
+        if (expense is not null) Expenses.Remove(expense);
     }
 }

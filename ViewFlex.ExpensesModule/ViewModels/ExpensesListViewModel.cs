@@ -6,13 +6,15 @@ namespace ViewFlex.ExpensesModule.ViewModels;
 
 public class ExpenseListViewModel : BindableBase
 { 
-    public ObservableCollection<ExpenseItem> ExpenseItems { get; set; }
-    public DelegateCommand<ExpenseItem> DeleteExpenseCommand { get; private set; }
+    public ObservableCollection<Expense> Expenses { get; set; }
+    public DelegateCommand<Expense> DeleteExpenseCommand { get; private set; }
     public DelegateCommand AddExpenseCommand { get; private set; }
 
     private readonly IExpenseService _expenseService;
     private string _newExpenseDescription = string.Empty;
     private decimal _newExpenseAmount;
+
+    private const decimal MinimumExpenseAmount = 0;
 
     public string NewExpenseDescription
     {
@@ -29,30 +31,30 @@ public class ExpenseListViewModel : BindableBase
     public ExpenseListViewModel(IExpenseService expenseService)
     {
         _expenseService = expenseService;
-        ExpenseItems = new ObservableCollection<ExpenseItem>(_expenseService.GetAllExpenses());
+        Expenses = new ObservableCollection<Expense>(_expenseService.GetExpenses());
         AddExpenseCommand = new DelegateCommand(AddExpense);
-        DeleteExpenseCommand = new DelegateCommand<ExpenseItem>(DeleteExpense);
+        DeleteExpenseCommand = new DelegateCommand<Expense>(DeleteExpense);
     }
 
     private void AddExpense()
     {
-        if (!string.IsNullOrEmpty(NewExpenseDescription) && NewExpenseAmount > 0)
+        if (!string.IsNullOrEmpty(NewExpenseDescription) && NewExpenseAmount > MinimumExpenseAmount)
         {
-            var newItem = new ExpenseItem { Description = NewExpenseDescription, Amount = NewExpenseAmount };
-            _expenseService.AddExpenseItem(newItem);
-            ExpenseItems.Add(newItem);
+            var expense = new Expense { Description = NewExpenseDescription, Amount = NewExpenseAmount };
+            _expenseService.AddExpense(expense);
+            Expenses.Add(expense);
 
             NewExpenseDescription = string.Empty;
-            NewExpenseAmount = 0;
+            NewExpenseAmount = MinimumExpenseAmount;
         }
     }
 
-    private void DeleteExpense(ExpenseItem item)
+    private void DeleteExpense(Expense expense)
     {
-        if (item is not null)
+        if (expense is not null)
         {
-            _expenseService.RemoveExpenseItem(item.Id);
-            ExpenseItems.Remove(item);
+            _expenseService.RemoveExpense(expense.Id);
+            Expenses.Remove(expense);
         }
     }
 }

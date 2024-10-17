@@ -4,7 +4,7 @@ namespace ViewFlex.Core.Interfaces;
 
 public interface IExpenseService
 {
-    List<ExpenseItem> GetAllExpenses();
-    void AddExpenseItem(ExpenseItem item);
-    void RemoveExpenseItem(int id);
+    List<Expense> GetExpenses();
+    void AddExpense(Expense expense);
+    void RemoveExpense(int id);
 }

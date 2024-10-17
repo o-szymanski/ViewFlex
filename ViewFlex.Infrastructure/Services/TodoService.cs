@@ -6,29 +6,30 @@ namespace ViewFlex.Infrastructure.Services;
 public class TodoService : ITodoService
 {
     private int _nextId = 6;
-    private readonly List<TodoItem> _todoItems =
+
+    private readonly List<Todo> TodoList =
     [
-        new() { Id = 1, Title = "Test Task" },
-        new() { Id = 2, Title = "Test Task" },
-        new() { Id = 3, Title = "Test Task" },
-        new() { Id = 4, Title = "Test Task" },
-        new() { Id = 5, Title = "Test Task" }
+        new() { Id = 1, Title = "Test Todo" },
+        new() { Id = 2, Title = "Test Todo" },
+        new() { Id = 3, Title = "Test Todo" },
+        new() { Id = 4, Title = "Test Todo" },
+        new() { Id = 5, Title = "Test Todo" }
     ];
 
-    public List<TodoItem> GetAllTodos() => _todoItems;
+    public List<Todo> GetTodoList() => TodoList;
 
-    public void AddTodoItem(TodoItem item)
+    public void AddTodo(Todo todo)
     {
-        if (item is not null)
+        if (todo is not null)
         {
-            item.Id = _nextId++;
-            _todoItems.Add(item);
+            todo.Id = _nextId++;
+            TodoList.Add(todo);
         }
     }
 
-    public void RemoveTodoItem(int id)
+    public void RemoveTodo(int id)
     {
-        var item = _todoItems.FirstOrDefault(x => x.Id == id);
-        if (item is not null) _todoItems.Remove(item);
+        var todo = TodoList.FirstOrDefault(x => x.Id == id);
+        if (todo is not null) TodoList.Remove(todo);
     }
 }
