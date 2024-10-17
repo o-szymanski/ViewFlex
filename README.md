@@ -4,7 +4,8 @@ ViewFlex is a sample application built with WPF technology that demonstrates the
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![ViewFlexFirstPicture](ViewFlexFirstPicture.png)
+![ViewFlexSecondPicture](ViewFlexSecondPicture.png)
 
 ## Technology Stack
 
