@@ -17,22 +17,47 @@ public class ExpenseService : IExpenseService
         new() { Id = 5, Amount = 100, Description = ExpenseDescription }
     ];
 
-    public async Task<List<Expense>> GetExpensesAsync() => await Task.FromResult(Expenses);
+    public async Task<List<Expense>> GetExpensesAsync()
+    {
+        try
+        {
+            return await Task.FromResult(Expenses);
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
+            return [];
+        }
+    }
 
     public async Task AddExpenseAsync(Expense expense)
     {
-        if (expense is not null)
+        try
         {
-            expense.Id = _nextExpenseId++;
-            Expenses.Add(expense);
-            await Task.CompletedTask;
+            if (expense is not null)
+            {
+                expense.Id = _nextExpenseId++;
+                Expenses.Add(expense);
+                await Task.CompletedTask;
+            }
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
         }
     }
 
     public async Task RemoveExpenseAsync(int id)
     {
-        var expense = Expenses.FirstOrDefault(x => x.Id == id);
-        if (expense is not null) Expenses.Remove(expense);
-        await Task.CompletedTask;
+        try
+        {
+            var expense = Expenses.FirstOrDefault(x => x.Id == id);
+            if (expense is not null) Expenses.Remove(expense);
+            await Task.CompletedTask;
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
+        }
     }
 }

@@ -20,7 +20,7 @@ public class TodoListViewModel : BindableBase
     }
 
     public TodoListViewModel(ITodoService todoService)
-    {      
+    {
         _todoService = todoService;
         _ = InitializeTodoListAsync();
         AddTodoCommand = new DelegateCommand(async () => await AddTodoAsync());
@@ -29,27 +29,48 @@ public class TodoListViewModel : BindableBase
 
     public async Task InitializeTodoListAsync()
     {
-        var todos = await _todoService.GetTodoListAsync();
-        TodoList = new ObservableCollection<Todo>(todos);
+        try
+        {
+            var todos = await _todoService.GetTodoListAsync();
+            TodoList = new ObservableCollection<Todo>(todos);
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
+        }
     }
 
     private async Task AddTodoAsync()
     {
-        if (!string.IsNullOrEmpty(NewTodoTitle))
+        try
         {
-            var todo = new Todo { Title = NewTodoTitle };
-            await _todoService.AddTodoAsync(todo);
-            TodoList.Add(todo);
-            NewTodoTitle = string.Empty;
+            if (!string.IsNullOrEmpty(NewTodoTitle))
+            {
+                var todo = new Todo { Title = NewTodoTitle };
+                await _todoService.AddTodoAsync(todo);
+                TodoList.Add(todo);
+                NewTodoTitle = string.Empty;
+            }
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
         }
     }
 
     private async Task DeleteTodoAsync(Todo todo)
     {
-        if (todo is not null)
+        try
         {
-            await _todoService.RemoveTodoAsync(todo.Id);
-            TodoList.Remove(todo);
+            if (todo is not null)
+            {
+                await _todoService.RemoveTodoAsync(todo.Id);
+                TodoList.Remove(todo);
+            }
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
         }
     }
 }

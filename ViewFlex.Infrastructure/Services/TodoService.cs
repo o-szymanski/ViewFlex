@@ -17,22 +17,47 @@ public class TodoService : ITodoService
         new() { Id = 5, Title = TitleName }
     ];
 
-    public async Task<List<Todo>> GetTodoListAsync() => await Task.FromResult(TodoList);
+    public async Task<List<Todo>> GetTodoListAsync()
+    {
+        try
+        {
+            return await Task.FromResult(TodoList);
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
+            return [];
+        }
+    }
 
     public async Task AddTodoAsync(Todo todo)
     {
-        if (todo is not null)
+        try
         {
-            todo.Id = _nextTodoId++;
-            TodoList.Add(todo);
-            await Task.CompletedTask;
+            if (todo is not null)
+            {
+                todo.Id = _nextTodoId++;
+                TodoList.Add(todo);
+                await Task.CompletedTask;
+            }
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
         }
     }
 
     public async Task RemoveTodoAsync(int id)
     {
-        var todo = TodoList.FirstOrDefault(x => x.Id == id);
-        if (todo is not null) TodoList.Remove(todo);
-        await Task.CompletedTask;
+        try
+        {
+            var todo = TodoList.FirstOrDefault(x => x.Id == id);
+            if (todo is not null) TodoList.Remove(todo);
+            await Task.CompletedTask;
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
+        }
     }
 }

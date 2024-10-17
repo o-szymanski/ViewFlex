@@ -39,29 +39,49 @@ public class ExpenseListViewModel : BindableBase
 
     public async Task InitializeExpensesAsync()
     {
-        var expenses = await _expenseService.GetExpensesAsync();
-        Expenses = new ObservableCollection<Expense>(expenses);
+        try
+        {
+            var expenses = await _expenseService.GetExpensesAsync();
+            Expenses = new ObservableCollection<Expense>(expenses);
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
+        }
     }
 
     private async Task AddExpenseAsync()
     {
-        if (!string.IsNullOrEmpty(NewExpenseDescription) && NewExpenseAmount > MinimumExpenseAmount)
+        try
         {
-            var expense = new Expense { Description = NewExpenseDescription, Amount = NewExpenseAmount };
-            await _expenseService.AddExpenseAsync(expense);
-            Expenses.Add(expense);
-
-            NewExpenseDescription = string.Empty;
-            NewExpenseAmount = MinimumExpenseAmount;
+            if (!string.IsNullOrEmpty(NewExpenseDescription) && NewExpenseAmount > MinimumExpenseAmount)
+            {
+                var expense = new Expense { Description = NewExpenseDescription, Amount = NewExpenseAmount };
+                await _expenseService.AddExpenseAsync(expense);
+                Expenses.Add(expense);
+                NewExpenseDescription = string.Empty;
+                NewExpenseAmount = MinimumExpenseAmount;
+            }
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
         }
     }
 
     private async Task DeleteExpenseAsync(Expense expense)
     {
-        if (expense is not null)
+        try
         {
-            await _expenseService.RemoveExpenseAsync(expense.Id);
-            Expenses.Remove(expense);
+            if (expense is not null)
+            {
+                await _expenseService.RemoveExpenseAsync(expense.Id);
+                Expenses.Remove(expense);
+            }
+        }
+        catch (Exception)
+        {
+            // Handle the error / Log
         }
     }
 }
