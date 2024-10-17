@@ -97,14 +97,14 @@
             <TextBlock Text="ViewFlex" FontSize="18" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </DockPanel>
 
-        <DockPanel Grid.Row="0" Grid.Column="1" Background="#F7F7F7" HorizontalAlignment="Stretch">
+        <DockPanel Grid.Row="0" Grid.Column="1" Background="DarkGray" HorizontalAlignment="Stretch">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,0">
                 <Button Content="−" Style="{StaticResource MinimizeButtonStyle}" Click="MinimizeButton_Click"/>
                 <Button Content="×" Style="{StaticResource CloseButtonStyle}" Click="CloseButton_Click"/>
             </StackPanel>
         </DockPanel>
 
-        <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <StackPanel.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="#092565" Offset="0.0"/>
@@ -115,6 +115,6 @@
             <Button Content="Expense List" Command="{Binding NavigateCommand}" CommandParameter="ExpenseListView" Margin="10, 10, 10, 10" Style="{StaticResource SidebarButtonStyle}"/>
         </StackPanel>
 
-        <ContentControl prism:RegionManager.RegionName="MainRegion" Grid.Column="1" Margin="179,114,264,152" Grid.Row="2"/>
+        <ContentControl prism:RegionManager.RegionName="Region" Grid.Column="1" Grid.Row="1" Margin="0" />
     </Grid>
 </Window>

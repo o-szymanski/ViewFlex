@@ -21,8 +21,4 @@
     <ProjectReference Include="..\ViewFlex.TodoModule\ViewFlex.TodoModule.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
-
 </Project>

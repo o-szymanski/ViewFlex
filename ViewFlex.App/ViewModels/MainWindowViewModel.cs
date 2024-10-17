@@ -12,11 +12,5 @@ public class MainWindowViewModel : BindableBase
         NavigateCommand = new DelegateCommand<string>(Navigate);
     }
 
-    private void Navigate(string viewName)
-    {
-        if (!string.IsNullOrEmpty(viewName))
-        {
-            _regionManager.RequestNavigate("MainRegion", viewName);
-        }
-    }
+    private void Navigate(string viewName) => _regionManager.RequestNavigate("Region", viewName);
 }
