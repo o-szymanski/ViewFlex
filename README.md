@@ -9,7 +9,7 @@ ViewFlex is a sample application built with WPF technology that demonstrates the
 
 ## Technology Stack
 
-Windows Presentation Foundation (WPF) / Prism
+C# / .NET / WPF / Prism
 
 ## Authors
 
